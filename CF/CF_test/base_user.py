@@ -1,4 +1,5 @@
 import numpy as np
+from load_data import *
 
 #计算两个用户的相似性
 def sim_cos(u1_id,u2_id,user_item):
@@ -11,7 +12,7 @@ def sim_cos(u1_id,u2_id,user_item):
     '''
     u1 = user_item[u1_id]
     u2 = user_item[u2_id]
-    cor_index=u1.keys() & u2.keys() #找到两个用户共同评价过的物品的索引
+    cor_index=set(u1.keys()) & set(u2.keys()) #找到两个用户共同评价过的物品的索引
     cross = 0  #初始化余弦相似度的分子部分
     u1_score = 0
     u2_score = 0
@@ -24,7 +25,7 @@ def sim_cos(u1_id,u2_id,user_item):
     if s == 0:
         return 0
     sim = m / s # 计算余弦相似度
-    return sim
+    return np.around(sim,2)
 
 def sim_jaccard(u1_id, u2_id, user_item):
     '''
@@ -84,3 +85,18 @@ def cal_allSim(user_item,method="cosin"):
                         raise ("请输入正确相似度计算方法")
     # 最终返回用户相似词典 {"u1":{"u2":0.5，"u3":0.04}}
     return sim_dict
+
+if __name__ == '__main__':
+    #显示矩阵
+    user_item,item_set= create_user_item_score("data/ua.base")
+    sim_dict= cal_allSim(user_item,"cosin")
+    with open("result/user_sim_score.txt",'w') as file:
+        # 将字典转换为字符串格式，并写入文件
+        file.write(str(sim_dict))
+
+    #隐式矩阵
+    user_item= create_user_item_click("data/ua.base")
+    sim_dict= cal_allSim(user_item,"jaccard")
+    with open("result/user_sim.txt",'w') as file:
+        # 将字典转换为字符串格式，并写入文件
+        file.write(str(sim_dict))
