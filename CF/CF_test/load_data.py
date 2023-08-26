@@ -58,3 +58,8 @@ def create_user_item_score(path):
                 print("已经读完")
                 break
     return user_item,item_set
+if __name__ == '__main__':
+    user_item= create_user_item_click("data/ua.base")
+    with open("result/user_item.txt",'w') as file:
+        # 将字典转换为字符串格式，并写入文件
+        file.write(str(user_item))
