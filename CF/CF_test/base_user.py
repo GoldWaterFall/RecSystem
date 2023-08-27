@@ -90,13 +90,13 @@ if __name__ == '__main__':
     #显示矩阵
     user_item,item_set= create_user_item_score("data/ua.base")
     sim_dict= cal_allSim(user_item,"cosin")
-    with open("result/user_sim_score.txt",'w') as file:
+    with open("result/user_sim.txt",'w') as file:
         # 将字典转换为字符串格式，并写入文件
         file.write(str(sim_dict))
 
     #隐式矩阵
-    user_item= create_user_item_click("data/ua.base")
-    sim_dict= cal_allSim(user_item,"jaccard")
-    with open("result/user_sim.txt",'w') as file:
+    #user_item= create_user_item_click("data/ua.base")
+    #sim_dict= cal_allSim(user_item,"jaccard")
+    #with open("result/user_sim.txt",'w') as file:
         # 将字典转换为字符串格式，并写入文件
-        file.write(str(sim_dict))
+        #file.write(str(sim_dict))
